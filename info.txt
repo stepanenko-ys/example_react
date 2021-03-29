@@ -1,146 +1,3 @@
-===================================================================
-REACT
------
-
-https://www.youtube.com/watch?v=xJZa2_aldDs&list=PLll7FOynxXuS-tS9J2kdMFDFJzVGu2UC8&index=42&t=1217s
-https://vladilen.ru/react?utm_source=youtube&utm_medium=social&utm_campaign=wfmreact&utm_content=video
-
--------------------
-
-В начале нужно у бедиться что уже устанволена Прогамма NodeJs и стоит утилита "npx"
-> npx -v
-  i: 6.14.8
-
--------------------
-
-# Папка "public"	- Содержит ???
-#--> "index.html"	- Главный файл который запускает все приложение. Самый главный в нем <div id="root"></div>
-#--> "manifest.json"	- Для ПВАшки ???
-
-# Папка "src"		- содержит весь наш код
-#--> "index.js"		- Все приложение запускается именно с этого файла
-#--> "App.js"		- Здесь первый код ???
-
-Файл "package.json"	- инструкция для всего пакета и приложения
-
--------------------
-
-> npm start		# Запуск приложения
-> npm build		# Собрать приложение в Продакшен моде
-> npm ls react		# Проверка количества и версий установленного реакта
-> npm list		# Проверка всего установленного
-
--------------
-
-class = className
-
--------------------
-
-1. Во все компоненты обязательно имопртировать:
-   import React from "react";
-
-2. Обязательно что-то экспортируется наружу:
-   export default function TodoList() {
-     return (...)
-   }
-
-3. Обязательно компоненты называть с большой буквы и желательно так-же как называется файл
-
-
--------------------
-
-
-===================================================================
-
-
-
-
-
-===================================================================
-Создание проекта:
----------------------
-
-1.  npx create-react-app project_react_1
-
-2.  rm src/App.css src/logo.svg src/App.test.js
-
-3.  nano src/App.js
-
-    i: import React from "react";
-    i: 
-    i: function App() {
-    i:   return (
-    i:     <div className='wrapper'>
-    i:       <h1>React Tutorial</h1>
-    i:     </div>
-    i:   );
-    i: }
-    i: 
-    i: export default App;
-
-4.  npm start
-
-5.  Insert to file "index.css":
-
-    i: .wrapper {
-    i:   padding-top: 5rem;
-    i:   margin: 0 auto;
-    i:   width: 600px;
-    i: }
-
-
-
-------------------------------------------------------
-Создание компонента <ul>:
----------------------
-
-1.  mkdir src/Todo
-2.  nano src/Todo/TodoList.js
-
-    i: import React from "react";
-    i: 
-    i: export default function TodoList() {
-    i:     return (
-    i:         <ul>
-    i:             <li>1</li>
-    i:             <li>2</li>
-    i:         </ul>
-    i:     )
-    i: }
-
-3.  В файл "App.js" вставить следующий код:
-
-    i: import TodoList from "./Todo/TodoList";
-    i: ....
-    i: <div className='wrapper'>
-    i:     <h1>React Tutorial</h1>
-    i:     <TodoList />
-    i: </div>
-    
-    
-------------------------------------------------------
-Создание компонента <li>:
----------------------
-
-1.  nano src/Todo/TodoItem.js
-
-    i: import React from "react";
-    i: 
-    i: export default function TodoItem() {
-    i:     return (
-    i:         <li>TODO</li>
-    i:     )
-    i: }
-
-1.  nano src/Todo/TodoList.js
-
-    i: <ul>
-    i:     <TodoItem />
-    i:     <TodoItem />
-    i:     <TodoItem />
-    i: </ul>
-
-
 ------------------------------------------------------
 Добавление стилей:
 ---------------------
@@ -212,7 +69,7 @@ class = className
     i: }
     i: ...
  
-    i: У любого масива есть метод ".map()" помогает преобразовать этот масив.
+    i: У любого массива есть метод ".map()" помогает преобразовать этот массив.
     i: todo => {...} На каждой итерации принимается объект "todo" и в колбек функции формируется HTML
 
     i: Можно получать так все "props"
@@ -227,7 +84,7 @@ class = className
 
 
 ------------------------------------------------------
-Вывод индекса для каждого из елементов "todo":
+Вывод индекса для каждого из элементов "todo":
 ---------------------
 
 1.  nano src/Todo/TodoList.js
@@ -258,6 +115,12 @@ class = className
 ===================================================================
 
 ---------------------------------------------------
+
+
+
+
+
+
 
 ===================================================================
 

@@ -1,71 +1,275 @@
-# Getting Started with Create React App
+***
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React App
 
-## Available Scripts
+* https://youtu.be/xJZa2_aldDs
+* https://vladilen.ru/react?utm_source=youtube&utm_medium=social&utm_campaign=wfmreact&utm_content=video
 
-In the project directory, you can run:
+<br>
 
-### `npm start`
+***
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 1. Первым делом:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+В начале нужно убедиться что уже установлена Программа NodeJs и стоит утилита "npx"
 
-### `npm test`
+```bash
+npx -v
+```
+Пример ответа: 6.14.8
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br><br>
 
-### `npm run build`
+***
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 2. Структура проекта
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> Папка "public" - Содержит ???
+> ```
+> index.html	 - Главный файл который запускает все приложение. Самый главный в нем <div id="root"></div>
+> manifest.json	 - Для ПВАшки ???
+> ```
 
-### `npm run eject`
+<br>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+> Папка "src" - Содержит весь наш код
+> ```
+> index.js	 - Все приложение запускается именно с этого файла
+> App.js	         - Здесь первый код ???
+> ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+> Файл "package.json"	- инструкция для всего пакета и приложения
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<br><br>
 
-## Learn More
+***
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 3. Команды
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+*  `npm start` - **Запуск приложения**
+*  `npm build` - **Собрать приложение в Продакшин моде**
+*  `npm ls react` - **Проверка количества и версий установленного реакта**
+*  `npm list` - **Проверка всего установленного**
 
-### Code Splitting
+<br><br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+***
 
-### Analyzing the Bundle Size
+### 4. Дополнительная информация
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+class = className
 
-### Making a Progressive Web App
+1. Во все компоненты обязательно импортировать:<br>
+```
+import React from "react";`
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+2. Обязательно что-то экспортируется наружу:<br>
+```
+export default function TodoList() {
+    return (...)
+}
+```
 
-### Advanced Configuration
+3. Обязательно компоненты называть с большой буквы и желательно так-же как называется файл
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+<br><br>
 
-### Deployment
+***
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 5. Создание проекта
 
-### `npm run build` fails to minify
+```bash
+npx create-react-app project_react_1
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+rm src/App.css src/logo.svg src/App.test.js
+```
 
+> nano src/App.js
+> ```
+> import React from "react";
+> 
+> function App() {
+>     return (
+>         <div className='wrapper'>
+>             <h1>React Tutorial</h1>
+>         </div>
+>     );
+> }
+> 
+> export default App;
+> ```
+
+```bash
+npm start
+```
+
+> nano src/index.css
+> ```
+> .wrapper {
+>     padding-top: 5rem;
+>     margin: 0 auto;
+>     width: 600px;
+> }
+> ```
+
+
+<br><br>
+
+***
+
+### 6. Создание компонента `<ul>`
+
+<br>
+
+```bash
+mkdir src/Todo
+```
+
+<br>
+
+> nano src/Todo/TodoList.js
+> ```
+> import React from "react";
+> 
+> export default function TodoList() {
+>     return (
+>         <ul>
+>             <li>1</li>
+>             <li>2</li>
+>         </ul>
+>     )
+> }
+> ```
+
+<br>
+
+> nano src/App.js
+> ```
+> import TodoList from "./Todo/TodoList";
+> 
+> ***
+> 
+> <div className='wrapper'>
+>     <h1>React Tutorial</h1>
+>     <TodoList />
+> </div>
+> ```
+
+<br><br>
+
+***
+
+### 7. Создание компонента `<li>`
+
+> nano src/Todo/TodoItem.js
+> ```
+> import React from "react";
+> 
+> export default function TodoItem() {
+>     return (
+>         <li>TODO</li>
+>     )
+> }
+> ```
+
+> nano src/Todo/TodoList.js
+> ```
+> <ul>
+>     <TodoItem />
+>     <TodoItem />
+>     <TodoItem />
+> </ul>
+> ```
+
+
+<br><br>
+
+***
+
+### 8. ...
+
+
+
+
+***
+***
+***
+***
+***
+***
+
+
+
+<br><br>
+
+***
+
+### 5. Prop-Types
+
+Так как JS это не типизированный язык — есть потенциальная опасность при передаче свойств.
+Для этого рекомендовано использовать описание входящих свойств в нужный компонент.
+
+```bash
+npm i prop-types
+```
+
+<br>
+
+> nano src/Todo/TodoList.js
+> ```
+> 
+> ***
+> import PropTypes from 'prop-types'
+> ***
+> 
+> 
+> function TodoList(props) {
+> 
+>     ***
+> 
+> }
+> 
+> TodoList.propTypes = {
+>     todos: PropTypes.arrayOf(PropTypes.object).isRequired
+> }
+> 
+> export default TodoList
+> ```
+
+<br>
+
+> nano src/Todo/TodoItem.js
+> ```
+> 
+> ***
+> import PropTypes from 'prop-types'
+> ***
+> 
+> 
+> function TodoItem({todo_data, todo_index}) {
+> 
+>     ***
+> 
+> }
+> 
+> TodoItem.propTypes = {
+>     todo_data: PropTypes.object.isRequired,
+>     todo_index: PropTypes.number
+> }
+> 
+> export default TodoItem
+> ```
+
+
+<br><br>
+
+***
+
+### 6. Prop-Types
