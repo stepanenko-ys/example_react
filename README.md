@@ -24,6 +24,10 @@ https://vladilen.ru/react?utm_source=youtube&utm_medium=social&utm_campaign=wfmr
 <a href="#Прием параметров">10. Прием параметров в компонент</a><br>
 <a href="#Вывод индекса">11. Вывод индекса</a><br>
 <a href="#Prop-Types">12. Prop-Types</a><br>
+<a href="#События">13. События</a><br>
+<a href="#Стейт">14. Стейт</a><br>
+<a href="#Динамические css классы">15. Динамические css классы</a><br>
+<a href="#React context">16. React context</a><br>
 
 <br><br>
 
@@ -104,6 +108,20 @@ export default function TodoList() {
 ```
 
 3. Обязательно компоненты называть с большой буквы и желательно так-же как называется файл
+
+
+4. Разбор конструкции:
+
+```
+setTodos(                                                   # Вызов функции
+    todos.map(myTodoItem => {                               # Перебираем массив "todos" и через метод "map" - где на каждой итерации принимаем объект "myTodoItem"
+        if (myTodoItem.id === id) {                         # Проверяем, если "myTodoItem.id" равняется тому "id" по которому мы кликнули
+            myTodoItem.completed = !myTodoItem.completed    # То тогда его поле "myTodoItem.completed" будет равняться его-же противоположному значению
+        }
+    return myTodoItem                                       # Возвращаем "myTodoItem"
+    })
+)
+```
 
 <br><br>
 
@@ -461,4 +479,230 @@ npm i prop-types
 
 ***
 
-### 13. ХХХ
+<a id="События"></a>
+
+### 13. События
+
+События работают через корневой элемент.
+
+Массив "todos" (из файла "App.js") - называется Стейтом.
+
+Невозможно изменить отдельные компоненты в каких-нибудь дочерних элементах. Для того что-бы что-то изменить — необходимо изменить сам Стейт.
+
+> nano src/Todo/TodoItem.js
+> ```
+> 
+> ...
+> 
+> <input type="checkbox" onChange={() => console.log("HELLO")} />
+> 
+> ...
+> 
+> > ```
+
+<br>
+
+Для передачи данного события/значения в родительский элемент нужно добавить еще одну функцию "myChange"
+
+> nano src/Todo/TodoItem.js
+> ```
+> ...
+> 
+> function TodoItem({todo_data, todo_index, myChange }) {
+> 
+> ...
+> 
+>         <input type="checkbox" style={styles.input} onChange={() => myChange(todo_data.id)} />
+> 
+> ...
+> 
+> TodoItem.propTypes = {
+>     ...
+>     myChange: PropTypes.func.isRequired,
+> }
+> ```
+
+<br>
+
+> nano src/Todo/TodoList.js
+> ```
+> ...
+> 
+> return <TodoItem todo_data={todo} key={todo.id} todo_index={todo_my_index} myChange={props.myToggle}  />
+> 
+> ...
+> 
+> TodoList.propTypes = {
+>     ...
+>     myToggle: PropTypes.func.isRequired,
+> }
+> ```
+
+<br>
+
+> nano src/Todo/App.js
+> ```
+> ...
+> 
+> function App() {
+>   let todos = [ ... ]
+>
+> function toggleTodo(id) {
+>     todos = todos.map(todo => {
+>         if (todo.id === id) {
+>             todo.completed = !todo.completed
+>         }
+>         return todo
+>     })
+> }
+> 
+> ...
+> 
+>         <TodoList todos={todos} myToggle={toggleTodo} />
+> 
+> ...
+> 
+> ```
+
+<br><br>
+
+***
+
+<a id="Стейт"></a>
+
+### 14. Стейт
+
+Создание Стейта, за которым будет следить реакт и Перерендеривать наш шаблон (добавлять динамики приложениям):
+
+> nano src/Todo/App.js
+> ```
+> const [todos, setTodos] = React.useState([
+>     {id: 1, completed: false, title: 'Купить Хлеб'},
+>     {id: 2, completed: false, title: 'Купить Масло'},
+>     {id: 3, completed: false, title: 'Купить Сыр'},
+> ])
+> ```
+
+Функция "useState" всегда возвращает Массив из 2-х элементов. 
+
+Первый элемент — это сами данные.
+
+Второй элемент — это функция позволяющая изменять данное состояние для того чтобы реакт видел эти изменения.
+
+<br>
+
+### Функция для изменения Стейта:
+
+> nano src/Todo/App.js
+> ```
+> function toggleTodo(id) {
+>     setTodos(
+>         todos.map(myTodoItem => {
+>             if (myTodoItem.id === id) {
+>                 myTodoItem.completed = !myTodoItem.completed
+>             }
+>         return myTodoItem
+>         })
+>     )
+> }
+> ```
+
+<br><br>
+
+***
+
+<a id="Динамические css классы"></a>
+
+### 15. Динамические css классы
+
+> nano src/index.css
+> ```
+> ...
+> 
+> .done {
+>     text-decoration: line-through;
+> }
+> 
+> ...
+> ```
+
+<br>
+
+> nano src/Todo/TodoItem.js
+> ```
+> ...
+> 
+> function TodoItem({todo_data, todo_index, myChange }) {
+>     const classes = []
+> 
+>     if (todo_data.completed) {              # Если "todo_data.completed" == True
+>         classes.push('done')
+>     }
+> 
+>     return (
+>         <li>
+>             <span className={classes.join(' ')}>
+>                 <input type="checkbox" checked={todo_data.completed} style={styles.input} onChange={() => myChange(todo_data.id)} />
+> 
+>                 ...
+> 
+>             </span>
+>         </li>
+>     )
+> }
+> 
+> ...
+> ```
+
+Конструкция `classes.join(' ')` нужна для того что-бы преобразовать массив в строку и каждый элемент соединить через пробел, на случай если классов(элементов) будет не один.
+
+<br><br>
+
+***
+
+<a id="React context"></a>
+
+### 16. React context
+
+> nano src/context.js
+> ```
+> import React from "react";
+> 
+> const myContext = React.createContext()
+> 
+> export default myContext
+> ```
+
+<br>
+
+> nano src/index.css
+> ```
+> ...
+> import myContext from "./context";
+> 
+> function App() {
+>     ...
+> 
+>     function removeTodo(id) {
+>         setTodos(todos.filter(myTodoItem => myTodoItem.id !== id))
+>     }
+> 
+>     return (
+>         <myContext.Provider value={{ removeTodo }}>
+>             <div className="wrapper">
+>                 ....
+>             </div>
+>         </myContext.Provider>
+>     );
+> }
+> 
+> ...
+> ```
+
+<br>
+
+> nano src/Todo/TodoItem.js
+> ```
+> ...
+> import myContext from "./context";
+> ```

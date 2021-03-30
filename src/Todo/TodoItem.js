@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types'
+import myContext from "../context";
 
 const styles = {
     li: {
@@ -16,11 +17,17 @@ const styles = {
     }
 }
 
-function TodoItem({todo_data, todo_index}) {
+function TodoItem({todo_data, todo_index, myChange }) {
+    const classes = []
+
+    if (todo_data.completed) {
+        classes.push('done')
+    }
+
     return (
         <li style={styles.li}>
-            <span>
-                <input type="checkbox" style={styles.input} />
+            <span className={classes.join(' ')}>
+                <input type="checkbox" checked={todo_data.completed} style={styles.input} onChange={() => myChange(todo_data.id)} />
                 <strong>{todo_index + 1}</strong>
                 &nbsp;-&nbsp;
                 {todo_data.title}
@@ -33,7 +40,8 @@ function TodoItem({todo_data, todo_index}) {
 
 TodoItem.propTypes = {
     todo_data: PropTypes.object.isRequired,
-    todo_index: PropTypes.number
+    todo_index: PropTypes.number,
+    myChange: PropTypes.func.isRequired,
 }
 
 export default TodoItem
