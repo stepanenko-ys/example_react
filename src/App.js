@@ -9,7 +9,7 @@ function App() {
     ]
 
     return (
-        <div className='wrapper'>
+        <div className="wrapper">
             <h1>React Tutorial</h1>
             <TodoList todos={todos} />
         </div>

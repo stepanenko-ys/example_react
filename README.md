@@ -243,6 +243,15 @@ mkdir src/Todo
 >         listStyle: 'none',
 >         margin: 0,
 >         padding: 0
+>     },
+>     li: {
+>         display: 'flex',
+>         justifyContent: 'space-between',
+>         alignItems: 'center',
+>         padding: '.5rem 1rem',
+>         border: '1px solid #ccc',
+>         borderRadius: '4px',
+>         marginBottom: '.5rem'
 >     }
 > }
 > 
@@ -252,8 +261,8 @@ mkdir src/Todo
 >         ...
 > 
 >         <ul style={styles.ul}>
->             <li>1</li>
->             <li>2</li>
+>             <li style={styles.li}>1</li>
+>             <li style={styles.li}>2</li>
 >         </ul>
 > 
 >         ...
