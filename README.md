@@ -27,7 +27,9 @@ https://vladilen.ru/react?utm_source=youtube&utm_medium=social&utm_campaign=wfmr
 <a href="#События">13. События</a><br>
 <a href="#Стейт">14. Стейт</a><br>
 <a href="#Динамические css классы">15. Динамические css классы</a><br>
-<a href="#React context">16. React context</a><br>
+<a href="#React context / useContext">16. React context / useContext</a><br>
+<a href="#Условные операторы в JSX">17. Условные операторы в JSX</a><br>
+<a href="#Формы">18. Формы</a><br>
 
 <br><br>
 
@@ -93,12 +95,18 @@ npx -v
 
 ### 4. Дополнительная информация
 
+<br>
+
 class = className
+
+<br>
 
 1. Во все компоненты обязательно импортировать:<br>
 ```
 import React from "react";`
 ```
+
+<br>
 
 2. Обязательно что-то экспортируется наружу:<br>
 ```
@@ -107,21 +115,80 @@ export default function TodoList() {
 }
 ```
 
+<br>
+
 3. Обязательно компоненты называть с большой буквы и желательно так-же как называется файл
 
+<br>
 
 4. Разбор конструкции:
 
 ```
-setTodos(                                                   # Вызов функции
-    todos.map(myTodoItem => {                               # Перебираем массив "todos" и через метод "map" - где на каждой итерации принимаем объект "myTodoItem"
-        if (myTodoItem.id === id) {                         # Проверяем, если "myTodoItem.id" равняется тому "id" по которому мы кликнули
-            myTodoItem.completed = !myTodoItem.completed    # То тогда его поле "myTodoItem.completed" будет равняться его-же противоположному значению
-        }
-    return myTodoItem                                       # Возвращаем "myTodoItem"
+setTodos(                                                       # Вызов функции
+    todos.map(                                                  # Перебираем массив "todos" методом "map" - где
+        myTodoItem => {                                         # на каждой итерации принимаем/создаем объект "myTodoItem"
+            if (myTodoItem.id === id) {                         # Проверяем, если "myTodoItem.id" равняется тому "id" по которому мы кликнули
+                myTodoItem.completed = !myTodoItem.completed    # То тогда его поле "myTodoItem.completed" будет равняться его-же противоположному значению
+            }
+        return myTodoItem                                       # Возвращаем "myTodoItem"
     })
 )
 ```
+
+<br>
+
+5. Разбор конструкции:
+
+```
+setTodos(                                      # Вызов функции
+    todos.filter(                              # Перебираем массив "todos" методом "filter" - где
+        myTodoItem => myTodoItem.id !== id     # на каждой итерации принимаем/создаем объект "myTodoItem" и дальше сравниваем: Если "myTodoItem.id" не равняется тому "id" которое мы передаем в функцию - 
+        )                                      # то мы оставляем элемент в масиве, а если же он совпадает - тогда он удалиться.
+    )
+```
+
+<br>
+
+6. Разбор конструкции:
+
+```
+Тернарный оператор
+
+> {todos.length ? (         # Если в массиве "todos" и в его поле "length" есть что-то отличное от 0
+>     <p>Yes TODOS</p>      # Выводим это
+> ) : (                     # Если же нет тогда
+>     <p>No TODOS</p>       # Выводим это
+> )}
+```
+
+<br>
+
+7. События на кнопках:
+
+```
+# Вариант 0 - НЕ правильный!
+
+# Если так указать "removeTodo(todo_data.id)" - тогда функция будет срабатывать сразу при рендеринге и копка сразу удалиться
+ 
+<button className='rm' onClick={removeTodo(todo_data.id)}>&times;</button>
+```
+
+```
+# Вариант 1
+
+# Передача колбека в "onClick".
+ 
+<button className='rm' onClick={() => removeTodo(todo_data.id)}>&times;</button>
+```
+
+```
+# Вариант 2
+
+# Возможно более производительный по памяти. Использование метода "bind".
+ 
+<button className='rm' onClick={removeTodo.bind(null, todo_data.id)}>&times;</button>
+```
+
 
 <br><br>
 
@@ -660,9 +727,9 @@ npm i prop-types
 
 ***
 
-<a id="React context"></a>
+<a id="React context / useContext"></a>
 
-### 16. React context
+### 16. React context / useContext
 
 > nano src/context.js
 > ```
@@ -675,7 +742,9 @@ npm i prop-types
 
 <br>
 
-> nano src/index.css
+Далее обворачиваем в `<myContext.Provider>` весь наш JSX и создаем функцию `removeTodo`:
+
+> nano src/Todo/App.js
 > ```
 > ...
 > import myContext from "./context";
@@ -704,5 +773,43 @@ npm i prop-types
 > nano src/Todo/TodoItem.js
 > ```
 > ...
+> import React, { useContext } from "react";
 > import myContext from "./context";
+> 
+> ...
+> 
+> function TodoItem({todo_data, todo_index, myChange }) {
+>     const { removeTodo } = useContext(myContext)
+> 
 > ```
+
+<br><br>
+
+***
+
+<a id="Условные операторы в JSX"></a>
+
+### 17. Условные операторы в JSX
+
+> nano src/Todo/App.js
+> ```
+> ...
+> 
+>     return (
+>        
+>         {todos.length ? (
+>             <TodoList todos={todos} myToggle={toggleTodo} />
+>         ) : (
+>             <p>No TODOS</p>
+>         )}
+> 
+> ...
+> ```
+
+<br><br>
+
+***
+
+<a id="Формы"></a>
+
+### 18. Формы
