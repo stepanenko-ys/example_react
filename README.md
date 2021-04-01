@@ -12,24 +12,25 @@ https://vladilen.ru/react?utm_source=youtube&utm_medium=social&utm_campaign=wfmr
 
 ### Все разделы:
 
-<a href="#Первым делом">1. Первым делом</a><br>
-<a href="#Структура проекта">2. Структура проекта</a><br>
-<a href="#Команды">3. Команды</a><br>
-<a href="#Дополнительная информация">4. Дополнительная информация</a><br>
-<a href="#Создание проекта">5. Создание проекта</a><br>
-<a href="#Создание компонента ul">6. Создание компонента ul</a><br>
-<a href="#Создание компонента li">7. Создание компонента li</a><br>
-<a href="#Добавление стилей">8. Добавление стилей</a><br>
-<a href="#Передача параметров">9. Передача параметров в компонент</a><br>
-<a href="#Прием параметров">10. Прием параметров в компонент</a><br>
-<a href="#Вывод индекса">11. Вывод индекса</a><br>
-<a href="#Prop-Types">12. Prop-Types</a><br>
-<a href="#События">13. События</a><br>
-<a href="#Стейт">14. Стейт</a><br>
-<a href="#Динамические css классы">15. Динамические css классы</a><br>
-<a href="#React context / useContext">16. React context / useContext</a><br>
-<a href="#Условные операторы в JSX">17. Условные операторы в JSX</a><br>
-<a href="#Формы">18. Формы</a><br>
+1. <a href="#Первым делом">Первым делом</a><br>
+2. <a href="#Структура проекта">Структура проекта</a><br>
+3. <a href="#Команды">Команды</a><br>
+4. <a href="#Дополнительная информация">Дополнительная информация</a><br>
+5. <a href="#Создание проекта">Создание проекта</a><br>
+6. <a href="#Создание компонента ul">Создание компонента ul</a><br>
+7. <a href="#Создание компонента li">Создание компонента li</a><br>
+8. <a href="#Добавление стилей">Добавление стилей</a><br>
+9. <a href="#Передача параметров">Передача параметров в компонент</a><br>
+10. <a href="#Прием параметров">Прием параметров в компонент</a><br>
+11. <a href="#Вывод индекса">Вывод индекса</a><br>
+12. <a href="#Prop-Types">Prop-Types</a><br>
+13. <a href="#События">События</a><br>
+14. <a href="#Стейт">Стейт</a><br>
+15. <a href="#Динамические css классы">Динамические css классы</a><br>
+16. <a href="#React context / useContext">React context / useContext</a><br>
+17. <a href="#Условные операторы в JSX">Условные операторы в JSX</a><br>
+18. <a href="#Формы">Формы</a><br>
+19. <a href="#Кастомный хук для Input">Кастомный хук для Input</a><br>
 
 <br><br>
 
@@ -813,3 +814,117 @@ npm i prop-types
 <a id="Формы"></a>
 
 ### 18. Формы
+
+> nano src/Todo/AddTodo.js
+> ```
+> import React, {useState} from "react";
+> import PropTypes from 'prop-types'
+> 
+> function AddTodo({ myOnCreate }) {
+> 
+>     const [value, setValue] = useState('')
+> 
+>     function submitHandler (event) {
+>         event.preventDefault()
+> 
+>         if (value.trim()) {      // Проверка - Если в "input" что-то заполнено (при этом удаляем лишние пробелы)
+>             myOnCreate(value)    // Тогда обращаемся в свойство "onCreate" и передаем ему значение "value"
+>             setValue('')         // Очищаем поле Input после выполнения
+>         }
+>     }
+> 
+>     return (
+>         <form style={{ marginBottom: '1rem' }} onSubmit={submitHandler}>
+>             <input type='text' style={{ marginRight: '1rem' }} value={value} onChange={event => setValue(event.target.value)} />
+>             <button type='submit'>Add Todo</button>
+>         </form>
+>     )
+> }
+> 
+> AddTodo.propTypes = {
+>     myOnCreate: PropTypes.func.isRequired
+> }
+> 
+> export default AddTodo
+> ```
+
+`.trim()` - этот метод удаляет лишние пробелы
+
+<br>
+
+> nano src/Todo/App.js
+> ```
+> ...
+> 
+> import AddTodo from "./Todo/AddTodo";
+> 
+> function App() {
+> 
+>     ...
+> 
+>     function addTodo(title) {
+>         setTodos(todos.concat([   // Для изменения Стейта вызываем метод "setTodos" куда передаем массив "todos" и для того - что-бы добавит новый элемент - вызываем метод "concat"
+>             {                     // в него передаем массив {} c одним объектом, который в последствие добавиться к массиву "todos" и потом это все возвращает новый массив который изменит Стейт
+>                 title,            // Поле "title" совпадает со значением "title" (типа: title: title)
+>                 id: Date.now(),
+>                 completed: false
+>             }
+>         ]))
+>     }
+> 
+>     return (
+> 
+>         ...
+> 
+>         <h1>React Tutorial</h1>
+> 
+>         <AddTodo myOnCreate={addTodo} />
+> 
+>         ...
+> 
+> ```
+
+<br><br>
+
+***
+
+<a id="Кастомный хук для Input"></a>
+
+### 19. Кастомный хук для Input
+
+Свои хуки принято называть начиная со строчки "use" например "useInputValue".
+
+> nano src/Todo/AddTodo.js
+> ```
+> ...
+> 
+> function useInputValue(defaultValue = '') {
+>     const [value, setValue] = useState(defaultValue)
+>     return {
+>         bind: {
+>             value,                                          // Или аналог - value: value
+>             onChange: event => setValue(event.target.value) // Функция "onChange" которая принимает "event" - который будет обращаться к "setValue" и задавать ему значение "event.target.value"
+>         },
+>         myClear: () => setValue(''),                        // Создаем функцию "myClear" которая обращается к функции setValue и задает ему пустую строчку
+>         value: () => value                                  // Создаем функцию "value" с помощью которой будем просто получать значения "value"
+>     }
+> }
+> 
+> function AddTodo({ myOnCreate }) {
+> 
+>     const input = useInputValue('')    // Это наш собственны Хук
+> 
+>     function submitHandler (event) {
+>         event.preventDefault()
+> 
+>         if (input.value().trim()) {
+>             myOnCreate(input.value())
+>             input.myClear()             // Для очистки "input" - Обращаемся к объекту input и вызываем у него метод Clear
+>         }
+>     }
+> 
+>     return (
+>         ...
+>         <input {...input.bind} />        {/* // Использование итератора Spread. Он сам поместить в этот Input занчение "value" и "onChange" */}
+>         ...
+> ```

@@ -1,6 +1,7 @@
 import React from "react";
 import TodoList from "./Todo/TodoList";
 import myContext from "./context";
+import AddTodo from "./Todo/AddTodo";
 
 function App() {
     const [todos, setTodos] = React.useState([
@@ -24,10 +25,22 @@ function App() {
         setTodos(todos.filter(myTodoItem => myTodoItem.id !== id))
     }
 
+    function addTodo(title) {
+       setTodos(todos.concat([   // Для изменения Стейта вызываем метод "setTodos" куда передаем массив "todos" и для того - что-бы добавит новый элемент - вызываем метод "concat"
+           {                     // в него передаем массив {} c одним объектом, который в последствие добавиться к массиву "todos" и потом это все возвращает новый массив который изменит Стейт
+               title,            // Поле "title" совпадает со значением "title" (типа: title: title)
+               id: Date.now(),
+               completed: false
+           }
+       ]))
+    }
+
     return (
         <myContext.Provider value={{ removeTodo }}>
             <div className="wrapper">
                 <h1>React Tutorial</h1>
+
+                <AddTodo myOnCreate={addTodo} />
 
                 {todos.length ? (
                     <TodoList todos={todos} myToggle={toggleTodo} />
