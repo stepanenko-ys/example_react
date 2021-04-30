@@ -928,3 +928,19 @@ npm i prop-types
 >         <input {...input.bind} />        {/* // Использование итератора Spread. Он сам поместить в этот Input занчение "value" и "onChange" */}
 >         ...
 > ```
+
+<br><br>
+
+***
+
+<a id="Кастомный хук для Input"></a>
+
+### 20. useEffect
+
+> nano src/Todo/App.js
+> ```
+> import React, { useEffect } from "react";
+> ...
+> 
+> 
+> ```
