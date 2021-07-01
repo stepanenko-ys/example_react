@@ -32,6 +32,7 @@ https://vladilen.ru/react?utm_source=youtube&utm_medium=social&utm_campaign=wfmr
 18. <a href="#Формы">Формы</a><br>
 19. <a href="#Кастомный хук для Input">Кастомный хук для Input</a><br>
 
+31. <a href="#">React.memo, useMemo, useCallback</a><br>
 <br><br>
 
 ***
@@ -927,4 +928,66 @@ npm i prop-types
 >         ...
 >         <input {...input.bind} />        {/* // Использование итератора Spread. Он сам поместить в этот Input занчение "value" и "onChange" */}
 >         ...
+> ```
+
+
+
+
+<br><br>
+
+***
+
+<a id=""></a>
+
+### 31. React.memo, useMemo, useCallbackt
+
+#### React.Memo
+
+> ```
+> const Header = ({title}) => <h1>{title}</h1>
+> export default React.memo(Header);
+> ```
+
+Когда Header визуализируется, он будет делать неглубокое сравнение с его реквизитами.
+Если эти реквизиты одинаковы, он пропустит отрисовку и вместо этого вернет свое последнее отрисованное значение.
+
+<br>
+
+#### useMemo
+
+> ```
+> const widgetList = useMemo(  
+>   () => widgets.map(  
+>     w => ({  
+>       ...w,  
+>       totalPrice: someComplexFunction(w.price),  
+>       estimatedDeliveryDate: someOtherComplexFunction(w.warehouseAddress)  
+>     }),  
+>   ),  
+>   [widgets],  
+> );
+> ```
+
+Если этот компонент отрисовывается и значение widgetsравно, то нет необходимости снова запускать эти дорогостоящие функции.
+Использование useMemoзапомнит результат, поэтому, если widgetsон не изменился с момента последнего рендеринга компонента, он пропустит вызов функции и вернет то, что он получил последним.
+
+<br>
+
+#### useCallback
+
+> ```
+> const Parent = () => {  
+>   const [showExtraDetails, setShowExtraDetails] = useState(false);  
+>   const handleClick = useCallback(  
+>     () => {  
+>     showData(showExtraDetails);  
+>   },  
+>   [showExtraDetails],  
+> );  
+>   return (  
+>     [...]  
+>     <Child onClick={() => {handleClick}/>  
+>     [...]  
+>   );  
+> }
 > ```
