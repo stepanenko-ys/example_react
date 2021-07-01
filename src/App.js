@@ -14,7 +14,6 @@ function App() {
         fetch('https://jsonplaceholder.typicode.com/todos?_limit=25')
             .then(response => response.json())
             .then(todos => {
-                set
                 setTodos(todos)
             }
             )
