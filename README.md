@@ -930,9 +930,6 @@ npm i prop-types
 >         ...
 > ```
 
-
-
-
 <br><br>
 
 ***
@@ -990,4 +987,15 @@ npm i prop-types
 >     [...]  
 >   );  
 > }
+=======
+<a id="Кастомный хук для Input"></a>
+
+### 20. useEffect
+
+> nano src/Todo/App.js
+> ```
+>> import React, { useEffect } from "react";
+> ...
+> 
+> 
 > ```
